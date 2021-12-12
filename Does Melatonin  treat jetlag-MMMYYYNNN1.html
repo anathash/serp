@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <title>Search</title>
+    <link rel="stylesheet" href="css/search_result_page.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.16/css/mdb.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+  </head>
+  <body>
+    <div id="header">
+      <div id="topbar">
+        <img id="searchbarimage" src="../images/icon.png" />
+        <div id="searchbar" type="text">
+          <input id="searchbartext" type="text" value=
+          "Does Melatonin  treat jetlag"
+          >
+          <button id="searchbarbutton">
+            <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div id="optionsbar">
+        <ul id="optionsmenu1"></ul>
+      </div>
+    </div>
+     <button class="btn sunny-morning-gradient" id="submitCode"  disabled onclick="next();" style="display: none; position:fixed; top:20px; left:80%;" >Answer Question</button>
+    <div id="searchresultsarea">
+      <p id="searchresultsnumber">
+        <div class="searchresult">
+          <p>
+            https://ajp.psychiatryonline.org/doi/pdf/10.1176/ajp.156.9.1392
+          </p>
+          <a href="https://ajp.psychiatryonline.org/doi/pdf/10.1176/ajp.156.9.1392" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=1" onclick="url(1);">
+            <h2>
+              Jet Lag
+            </h2>
+          </a>
+          <p id="description">
+            by RL Spitzer · 1999 · Cited by 190 — high on each day of the study. Conclusions: The use of melatonin for preventing jet lag needs further study. (Am J Psychiatry 1999; 156:1392–1396).
+          </p>
+        </div>
+        <div class="searchresult">
+          <p>
+            https://www.theguardian.com/society/2020/jan/14/melatonin-should-not-be-made-available-on-nhs-to-treat-jet-lag
+          </p>
+          <a href="https://www.theguardian.com/society/2020/jan/14/melatonin-should-not-be-made-available-on-nhs-to-treat-jet-lag" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=2" onclick="url(2);">
+            <h2>
+              Melatonin should not be offered by NHS to treat jet lag – review
+            </h2>
+          </a>
+          <p id="description">
+            14 Jan 2020 — Most of the clinical trials on melatonin for jet lag, the team noted, were published between 1986 and 2005, and many were small. But as the ...
+          </p>
+        </div>
+        <div class="searchresult">
+          <p>
+            https://www.webmd.com/sleep-disorders/features/jet-lag-remedies
+          </p>
+          <a href="https://www.webmd.com/sleep-disorders/features/jet-lag-remedies" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=3" onclick="url(3);">
+            <h2>
+              How to Cope With Jet Lag - WebMD
+            </h2>
+          </a>
+          <p id="description">
+            19 Jan 2010 — How to reduce or prevent sleepiness and other jet lag symptoms with ... melatonin, or prescription medication that can help with jet lag ...
+          </p>
+        </div>
+        <div class="searchresult">
+          <p>
+            https://www.cnbc.com/2020/01/03/does-melatonin-work-is-it-safe-for-jet-lag.html
+          </p>
+          <a href="https://www.cnbc.com/2020/01/03/does-melatonin-work-is-it-safe-for-jet-lag.html" ping="http://localhost/SERP/trackings.php?pos=4" target="_blank" style="text-decoration: none;" onclick="url(4);">
+            <h2>
+              What doctors say about using melatonin as a jet lag cure
+            </h2>
+          </a>
+          <p id="description">
+            3 Jan 2020 — If used correctly, melatonin is an effective and safe treatment for jet lag, says Dr. Sak. How much melatonin to take — and when? In most ...
+          </p>
+        </div>
+        <div class="searchresult">
+          <p>
+            https://pubmed.ncbi.nlm.nih.gov/12076414/
+          </p>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/12076414/" ping="http://localhost/SERP/trackings.php?pos=5" target="_blank" style="text-decoration: none;" onclick="url(5);">
+            <h2>
+              Melatonin for the prevention and treatment of jet lag - PubMed
+            </h2>
+          </a>
+          <p id="description">
+            by A Herxheimer · 2002 · Cited by 590 — Melatonin is remarkably effective in preventing or reducing jet-lag, and occasional short-term use appears to be safe. It should be recommended to
+          </p>
+        </div>
+        <div class="searchresult">
+          <p>
+            https://www.health.harvard.edu/sleep/melatonin-for-jet-lag
+          </p>
+          <a href="https://www.health.harvard.edu/sleep/melatonin-for-jet-lag" ping="http://localhost/SERP/trackings.php?pos=6" target="_blank" style="text-decoration: none;" onclick="url(6);">
+            <h2>
+              Melatonin for jet lag - Sleep - Harvard Health
+            </h2>
+          </a>
+          <p id="description">
+            6 Aug 2015 — After the westward return leg, early morning awakening would be more typical. Melatonin has been more effective at treating eastward jet lag, ...
+          </p>
+        </div>
+        <div class="searchresult">
+          <p>
+            https://www.sciencedaily.com/releases/2006/02/060210090643.htm
+          </p>
+          <a href="https://www.sciencedaily.com/releases/2006/02/060210090643.htm" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=7" onclick="url(7);">
+            <h2>
+              No Evidence That Melatonin Is Effective In Treating Jet Lag
+            </h2>
+          </a>
+          <p id="description">
+            10 Feb 2006 — There is no evidence that melatonin is effective in treating secondary sleep disorders or preventing jet lag, finds a study published online ...
+          </p>
+        </div>
+        <div class="searchresult">
+          <p>
+            https://www.jetlag.co.nz/melatonin.html
+          </p>
+          <a href="https://www.jetlag.co.nz/melatonin.html" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=8" onclick="url(8);">
+            <h2>
+              Melatonin does not counteract jet lag.
+            </h2>
+          </a>
+          <p id="description">
+            Latest Research says using Melatonin for jet lag doesn't counter jet lag. There have been conflicting reports on the side affects of melatonin and now there is strong doubts about Melatonin as a jet lag remedy. Timing of the dose has been found to be crucial, and incorrect use can result in jet lag being made worse rather than better.
+          </p>
+        </div>
+        <div class="searchresult">
+          <p>
+            https://www.newscientist.com/article/mg18925394-900-melatonin-may-have-no-effect-on-sleep-patterns/
+          </p>
+          <a href="https://www.newscientist.com/article/mg18925394-900-melatonin-may-have-no-effect-on-sleep-patterns/" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=9" onclick="url(9);">
+            <h2>
+              Melatonin may have no effect on sleep patterns | New Scientist
+            </h2>
+          </a>
+          <p id="description">
+            15 Feb 2006 — NEXT time you jet off somewhere exotic, leave those “anti-jetlag” melatonin pills at home. They're useless, concludes a review of melatonin ...
+          </p>
+        </div>
+      </p>
+    </div>
+  </body>
+  <script>
+    $.cookie('clicked', "no");
+    var changed = false;
+    var checkCookie = function() {
+      return function() {
+          if ($.cookie("clicked") == "yes" && changed == false) {
+              document.getElementById("submitCode").disabled = false;
+              document.getElementById("submitCode").style.display = "block";
+              changed = true;
+          }
+      };
+    }();
+    window.setInterval(checkCookie, 100);
+    var mouse_movement = [];
+    var basic = [];
+    var user_action = [];
+    var user_view = [];
+    var exp_id = random_exp_id();
+    var window_width = document.body.scrollWidth;
+    var window_height = document.body.scrollHeight;
+        var time = new Date().toLocaleString('en-US');
+        var basic = [exp_id, window_width, window_height, time];
+        $.cookie('basic', JSON.stringify(basic));
+    $.get("https://ipinfo.io", function(response) {
+        user_id =response.ip;
+        upload_basic();
+    }, "json")
+    window.setInterval(function () {
+        upload_view(document.documentElement.scrollTop);
+    }, 3000);
+    function url(link_id) {
+        document.getElementById("submitCode").disabled = false;
+        document.getElementById("submitCode").style.display = "block";
+        //upload_action("click link",link_id);
+    }
+    function ad() {
+        upload_action("click ad",0);
+    }
+    function next() {
+            //upload_action("close_page", 0);
+            var end_time = new Date().toLocaleString('en-US');
+            basic.push(end_time);
+            $.cookie('basic', JSON.stringify(basic));
+            // $.cookie('mouse_movement', JSON.stringify(mouse_movement));
+            // $.cookie('user_action', JSON.stringify(user_action));
+            $.cookie('user_view', JSON.stringify(user_view));
+            window.location.href='post_question.php';
+        }
+    mouse_wheel();
+    function mouse_wheel() {
+        var scrollFunc = function (e) {
+            var e = window.event || e;
+            if (e.wheelDelta) {
+                if (e.wheelDelta > 0) {
+                    upload_action("scroll up",0)
+                }
+                if (e.wheelDelta < 0) {
+                    upload_action("scroll down",0)
+                }
+            } else if (e.detail) {
+                if (e.detail> 0) {
+                   upload_action("scroll up",0)
+                }
+                if (e.detail< 0) {
+                    upload_action("scroll down",0)
+                }
+            }
+        };
+        if (document.addEventListener) {
+            document.addEventListener('DOMMouseScroll', scrollFunc, false);
+        }
+        window.onmousewheel = document.onmousewheel = scrollFunc;
+    }
+    function mouse_position(e, obj) {
+        var e = window.event || e;
+        var position = [e.clientX, e.clientY];
+        upload_position(position[0],position[1]);
+    }
+    window.onload = function() {
+        document.onmousemove = function(event) {mouse_position(event, this);}
+    }
+    function upload_basic() {
+        var time = new Date().toLocaleString('en-US');
+        basic = [exp_id, window_width, window_height, time];
+    }
+    //function upload_position(x,y) {
+    //     var time = new Date().toLocaleString();
+    //     var position = [x,y,time];
+    //     mouse_movement.push(position);
+    // }
+    //function upload_action(type,link_id) {
+    //    var time = new Date().toLocaleString('en-US');
+    //   var action = [link_id, type, time];
+    //  user_action.push(action);
+    //}
+    function upload_view(view) {
+        var time = new Date().toLocaleString('en-US');
+        var v = [view, time];
+        user_view.push(v);
+    }
+    function random_exp_id() {
+        var t = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678",
+        a = t.length,
+        id = "";
+        for (i = 0; i < 8; i++) id += t.charAt(Math.floor(Math.random() * a));
+        return id
+    }
+  </script>
+</html>
