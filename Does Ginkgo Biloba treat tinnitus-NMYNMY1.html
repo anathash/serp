@@ -32,15 +32,15 @@
       <p id="searchresultsnumber">
         <div class="searchresult">
           <p>
-            https://www.verywellhealth.com/natural-remedies-for-tinnitus-89317
+            https://www.jwatch.org/jw200102060000006/2001/02/06/gingko-biloba-tinnitus-try-something-else
           </p>
-          <a href="https://www.verywellhealth.com/natural-remedies-for-tinnitus-89317" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=1" onclick="url(1);">
+          <a href="https://www.jwatch.org/jw200102060000006/2001/02/06/gingko-biloba-tinnitus-try-something-else" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=1" onclick="url(1);">
             <h2>
-              Natural Remedies for Tinnitus - Verywell Health
+              Gingko biloba for Tinnitus? Try Something Else. - NEJM ...
             </h2>
           </a>
           <p id="description">
-            Ginkgo Biloba — An herb said to stimulate circulation, ginkgo biloba may have an impact on a subset of people with tinnitus. For a report published in the ...
+            6 Feb 2001 — Gingko biloba for Tinnitus? Try Something Else. KI Marton, reviewing Drew S and Davies E. BMJ 2001 Jan 13. Tinnitus affects up to 10 percent of ...
           </p>
         </div>
         <div class="searchresult">
@@ -71,15 +71,15 @@
         </div>
         <div class="searchresult">
           <p>
-            https://www.medwave.cl/link.cgi/English/Updates/Epistemonikos/7294.act
+            https://www.bmj.com/content/322/7278/73
           </p>
-          <a href="https://www.medwave.cl/link.cgi/English/Updates/Epistemonikos/7294.act" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=4" onclick="url(4);">
+          <a href="https://www.bmj.com/content/322/7278/73" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=4" onclick="url(4);">
             <h2>
-              Ginkgo biloba for the treatment of tinnitus - Medwave
+              Effectiveness of Ginkgo biloba in treating tinnitus - The BMJ
             </h2>
           </a>
           <p id="description">
-            by F Kramer · 2018 · Cited by 8 — Key Words: Ginkgo biloba, tinnitus, Epistemonikos, GRADE ... the treatment of tinnitus, but none has been established as clearly effective.
+            by S Drew · 2001 · Cited by 219 — This study has not shown that Ginkgo biloba is effective in treating tinnitus. The extract used in this study (LI 1370 150 mg/day for 12 weeks) ...
           </p>
         </div>
         <div class="searchresult">
@@ -112,7 +112,7 @@
     </div>
   </body>
   <script>
-    $.cookie('clicked', "no");
+    $.cookie('clicked', "no", { expires : 1 });
     var changed = false;
     var checkCookie = function() {
       return function() {
@@ -133,14 +133,11 @@
     var window_height = document.body.scrollHeight;
         var time = new Date().toLocaleString('en-US');
         var basic = [exp_id, window_width, window_height, time];
-        $.cookie('basic', JSON.stringify(basic));
+        $.cookie('basic', JSON.stringify(basic), { expires : 1 });
     $.get("https://ipinfo.io", function(response) {
         user_id =response.ip;
         upload_basic();
     }, "json")
-    window.setInterval(function () {
-        upload_view(document.documentElement.scrollTop);
-    }, 3000);
     function url(link_id) {
         document.getElementById("submitCode").disabled = false;
         document.getElementById("submitCode").style.display = "block";
@@ -153,10 +150,9 @@
             //upload_action("close_page", 0);
             var end_time = new Date().toLocaleString('en-US');
             basic.push(end_time);
-            $.cookie('basic', JSON.stringify(basic));
+            $.cookie('basic', JSON.stringify(basic), { expires : 1 });
             // $.cookie('mouse_movement', JSON.stringify(mouse_movement));
             // $.cookie('user_action', JSON.stringify(user_action));
-            $.cookie('user_view', JSON.stringify(user_view));
             window.location.href='post_question.php';
         }
     mouse_wheel();

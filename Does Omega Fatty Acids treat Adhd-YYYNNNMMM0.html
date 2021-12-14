@@ -58,6 +58,19 @@
         </div>
         <div class="searchresult">
           <p>
+            https://www.additudemag.com/adhd-omega-3-benefits/
+          </p>
+          <a href="https://www.additudemag.com/adhd-omega-3-benefits/" ping="http://localhost/SERP/trackings.php?pos=3" target="_blank" style="text-decoration: none;" onclick="url(3);">
+            <h2>
+              Omega 3s: The Ultimate (ADHD) Brain Food - ADDitude
+            </h2>
+          </a>
+          <p id="description">
+            5 May 2021 — Supplementing with omega-3s eases hyperactivity. Analyzing data from 16 studies on ADHD and omega-3s, researchers at Oregon Health & Science ...
+          </p>
+        </div>
+        <div class="searchresult">
+          <p>
             https://pubmed.ncbi.nlm.nih.gov/28993963/
           </p>
           <a href="https://pubmed.ncbi.nlm.nih.gov/28993963/" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=4" onclick="url(4);">
@@ -71,28 +84,28 @@
         </div>
         <div class="searchresult">
           <p>
-            https://medium.com/the-method/fish-oil-cant-cure-adhd-940ac85ed6c0
-          </p>
-          <a href="https://medium.com/the-method/fish-oil-cant-cure-adhd-940ac85ed6c0" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=5" onclick="url(5);">
-            <h2>
-              Fish Oil Can't Cure ADHD - Medium
-            </h2>
-          </a>
-          <p id="description">
-            21 Nov 2019 — ADHD is a funny disorder. ... Pictured: Probably useless Source: Pexels ... among those children with ADHD who have omega-3 deficiency”.
-          </p>
-        </div>
-        <div class="searchresult">
-          <p>
             https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6753311/
           </p>
-          <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6753311/" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=6" onclick="url(6);">
+          <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6753311/" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=5" onclick="url(5);">
             <h2>
               Effect of omega-3 plus methylphenidate as an alternative ...
             </h2>
           </a>
           <p id="description">
             The present study showed that omega-3 supplementation has no effect on the treatment of children with ADHD, so, the study results were negative. Previous studies have shown that omega-3s are well tolerated by children and have minor side effects such as digestive discomfort and nose bleeding [33].
+          </p>
+        </div>
+        <div class="searchresult">
+          <p>
+            https://medium.com/the-method/fish-oil-cant-cure-adhd-940ac85ed6c0
+          </p>
+          <a href="https://medium.com/the-method/fish-oil-cant-cure-adhd-940ac85ed6c0" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=6" onclick="url(6);">
+            <h2>
+              Fish Oil Can't Cure ADHD - Medium
+            </h2>
+          </a>
+          <p id="description">
+            21 Nov 2019 — ADHD is a funny disorder. ... Pictured: Probably useless Source: Pexels ... among those children with ADHD who have omega-3 deficiency”.
           </p>
         </div>
         <div class="searchresult">
@@ -110,15 +123,15 @@
         </div>
         <div class="searchresult">
           <p>
-            https://pubmed.ncbi.nlm.nih.gov/16777670/
+            https://theconversation.com/omega-3-fish-oil-as-effective-as-drugs-for-some-children-with-adhd-127311
           </p>
-          <a href="https://pubmed.ncbi.nlm.nih.gov/16777670/" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=8" onclick="url(8);">
+          <a href="https://theconversation.com/omega-3-fish-oil-as-effective-as-drugs-for-some-children-with-adhd-127311" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=8" onclick="url(8);">
             <h2>
-              Omega-3 fatty acids in ADHD and related ... - PubMed
+              Omega-3 fish oil as effective as drugs for some children with ...
             </h2>
           </a>
           <p id="description">
-            by AJ Richardson · 2006 · Cited by 384 — Dietary supplementation with fish oils (providing EPA and DHA) appears to alleviate ADHD-related symptoms in at least some children, and one study
+            21 Nov 2019 — Some studies have shown that omega-3 fish oil may help with ADHD symptoms. What's more, they're safe and well-tolerated. However, the results of ...
           </p>
         </div>
         <div class="searchresult">
@@ -138,7 +151,7 @@
     </div>
   </body>
   <script>
-    $.cookie('clicked', "no");
+    $.cookie('clicked', "no", { expires : 1 });
     var changed = false;
     var checkCookie = function() {
       return function() {
@@ -159,14 +172,11 @@
     var window_height = document.body.scrollHeight;
         var time = new Date().toLocaleString('en-US');
         var basic = [exp_id, window_width, window_height, time];
-        $.cookie('basic', JSON.stringify(basic));
+        $.cookie('basic', JSON.stringify(basic), { expires : 1 });
     $.get("https://ipinfo.io", function(response) {
         user_id =response.ip;
         upload_basic();
     }, "json")
-    window.setInterval(function () {
-        upload_view(document.documentElement.scrollTop);
-    }, 3000);
     function url(link_id) {
         document.getElementById("submitCode").disabled = false;
         document.getElementById("submitCode").style.display = "block";
@@ -179,10 +189,9 @@
             //upload_action("close_page", 0);
             var end_time = new Date().toLocaleString('en-US');
             basic.push(end_time);
-            $.cookie('basic', JSON.stringify(basic));
+            $.cookie('basic', JSON.stringify(basic), { expires : 1 });
             // $.cookie('mouse_movement', JSON.stringify(mouse_movement));
             // $.cookie('user_action', JSON.stringify(user_action));
-            $.cookie('user_view', JSON.stringify(user_view));
             window.location.href='post_question.php';
         }
     mouse_wheel();

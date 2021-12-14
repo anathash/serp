@@ -32,28 +32,28 @@
       <p id="searchresultsnumber">
         <div class="searchresult">
           <p>
-            https://www.tinnitus.org.uk/tinnitus-and-ginkgo-biloba
-          </p>
-          <a href="https://www.tinnitus.org.uk/tinnitus-and-ginkgo-biloba" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=1" onclick="url(1);">
-            <h2>
-              Tinnitus and ginkgo biloba
-            </h2>
-          </a>
-          <p id="description">
-            15 Apr 2019 — Although independent evidence is limited, what there is does not show that Ginkgo biloba is effective for tinnitus. The potential side effects ...Verdict: Efficacy - does this treatment work?: E...Verdict: Safety - is this treatment harmful?: Evi...BTA opinion on this treatment: Although indep...Type of treatment: Dietary supplement
-          </p>
-        </div>
-        <div class="searchresult">
-          <p>
             https://www.verywellhealth.com/natural-remedies-for-tinnitus-89317
           </p>
-          <a href="https://www.verywellhealth.com/natural-remedies-for-tinnitus-89317" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=2" onclick="url(2);">
+          <a href="https://www.verywellhealth.com/natural-remedies-for-tinnitus-89317" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=1" onclick="url(1);">
             <h2>
               Natural Remedies for Tinnitus - Verywell Health
             </h2>
           </a>
           <p id="description">
             Ginkgo Biloba — An herb said to stimulate circulation, ginkgo biloba may have an impact on a subset of people with tinnitus. For a report published in the ...
+          </p>
+        </div>
+        <div class="searchresult">
+          <p>
+            https://www.tandfonline.com/doi/abs/10.3109/00206099409071870
+          </p>
+          <a href="https://www.tandfonline.com/doi/abs/10.3109/00206099409071870" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=2" onclick="url(2);">
+            <h2>
+              Ginkgo biloba Extract for the Treatment of Tinnitus - Taylor ...
+            </h2>
+          </a>
+          <p id="description">
+            by KM Holgers · 1994 · Cited by 108 — Previous studies have shown contradictory results of Ginkgo biloba extract (GBE) treatment of tinnitus. The present study was divided into two parts: first ...
           </p>
         </div>
         <div class="searchresult">
@@ -112,7 +112,7 @@
     </div>
   </body>
   <script>
-    $.cookie('clicked', "no");
+    $.cookie('clicked', "no", { expires : 1 });
     var changed = false;
     var checkCookie = function() {
       return function() {
@@ -133,14 +133,11 @@
     var window_height = document.body.scrollHeight;
         var time = new Date().toLocaleString('en-US');
         var basic = [exp_id, window_width, window_height, time];
-        $.cookie('basic', JSON.stringify(basic));
+        $.cookie('basic', JSON.stringify(basic), { expires : 1 });
     $.get("https://ipinfo.io", function(response) {
         user_id =response.ip;
         upload_basic();
     }, "json")
-    window.setInterval(function () {
-        upload_view(document.documentElement.scrollTop);
-    }, 3000);
     function url(link_id) {
         document.getElementById("submitCode").disabled = false;
         document.getElementById("submitCode").style.display = "block";
@@ -153,10 +150,9 @@
             //upload_action("close_page", 0);
             var end_time = new Date().toLocaleString('en-US');
             basic.push(end_time);
-            $.cookie('basic', JSON.stringify(basic));
+            $.cookie('basic', JSON.stringify(basic), { expires : 1 });
             // $.cookie('mouse_movement', JSON.stringify(mouse_movement));
             // $.cookie('user_action', JSON.stringify(user_action));
-            $.cookie('user_view', JSON.stringify(user_view));
             window.location.href='post_question.php';
         }
     mouse_wheel();
