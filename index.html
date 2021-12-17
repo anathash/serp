@@ -70,13 +70,49 @@ body {
 <div class="login-box">
     <div class="container">
         <div class="jumbotron cloudy-knoxville-gradient">
+			<script>
+				function checkSettings(){
+					var p  = HTMLAnchorElement.prototype		
+					var ping_enabled  = "ping" in HTMLAnchorElement.prototype;
+					if (!ping_enabled){
+						alert('We are sorry but the broweser you are using is not supported by our application. Please use another browser such as Google Chrome.');
+						return false;
+					}
+					var cookieEnabled = navigator.cookieEnabled;
+					if (!cookieEnabled){ 
+						document.getElementById("divCookies").style.display = "block";
+						return false;
+					}
+				return true;
+				}
+			</script>
             <div class="container">
                 <h3>Welcome, here is</h3>
                 <h1 class="display-4">SERP Experiment</h1>
             </div>
             <div>
-                <form action='personal_details.php' method='post'>
+                <form action='personal_details.php' method='post' onsubmit="return checkSettings();">
                     <div class="textbox">
+						<div id="divCookies" style="display: none;">
+							<p>
+							<span style="color: #FF0000;font-size:130%;">
+							The survey cannot procees because cookies are diabaled in your browser!
+							</span>
+							<br>
+							<span style="color: #FF0000;">
+							Please enable cookies and resubmit your Amazon ID. 
+							<br>
+							For instructions on how to enable cookies see:
+							<br>
+
+							<a href="https://www.nap.edu/content/enabling-cookies-in-your-browser">https://www.nap.edu/content/enabling-cookies-in-your-browser</a>
+							<br>
+							<br>
+							</span>
+							</p>
+							
+						</div>
+
                         <i class="fas fa-user"></i>
                         <input type="text" required="" placeholder="Your Amazon ID" name='ID'>
                     </div>

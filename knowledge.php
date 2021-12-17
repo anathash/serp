@@ -90,31 +90,36 @@
     <div class="container">
         <div class="jumbotron cloudy-knoxville-gradient">
             <div class="container">
-                <h4> Thank you for agreeing to participate in our research survey!
+                <h4> Thanks for agreeing to participate in our research survey!
 				<br>
 				<br>
-				In the next page you will be presented with a search result page. The links in that page will discuss <span style="color: #3875d7"
-                            ><?php echo $_COOKIE['topic1']; ?></span> as a treatment for <span style="color: #993333"
+				In the next page you will be presented with search results for the query: is <span style="color: #3875d7"
+                            ><?php echo $_COOKIE['topic1']; ?></span> an effective treatment for <span style="color: #993333"
                             ><?php echo $_COOKIE['topic0']; ?></span>.
 				<br>
 				<br>		
-				Your task is to determine the the answer to the question: Is  <span style="color: #3875d7"
-                            ><?php echo $_COOKIE['topic1']; ?></span> effective in treating <span style="color: #993333"
-                            ><?php echo $_COOKIE['topic0']; ?></span> <u>in the context of the presented results only.</u>
+				Your task is to determine the answer to this query, <u>in the context of the presented results only.</u>
 				<br>
 				<br>
 				
-				Use the links presented in the next page (click of at least one) to find the required answer. When you are ready, click the “Answer Question” button.
+				Use the links in the next page (click at least one) to find the required answer. When you are ready, click the “Answer Survey” button.
 				<br>
 				<br>
 				You will then be directed to a form to insert your answer.
-				You will also be required to shortly explain what is/are  <span style="color: #3875d7"
+				You will also be required to shortly explain what is  <span style="color: #3875d7"
                             ><?php echo $_COOKIE['topic1']; ?></span>, what is <span style="color: #993333"
                             ><?php echo $_COOKIE['topic0']; ?></span>
 				and why you chose the answer you did. 
-                </h4>
+				<br>
+				<br>
+				<span style="color: #FF0000">Bonus Plan:</span>
+				Our system will record your search behavior for academic research purposes. 
+				 <br>
+				 If our data will show that your answers were qualified by the results presented to you and your search actions, you will receive a bonus of <span style="color: #FF0000">1$.</span>
                 <br>
-                <p>Before you continue, please answer this question:</p>
+				</h4>
+                <br>
+                <p>Before proceeding to the next page, please answer this question:</p>
                 <h3>Do you have pre-existing knowledge regarding above treatment? </h3>
             </div>
             <div class="row">

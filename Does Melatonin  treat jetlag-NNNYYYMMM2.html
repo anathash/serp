@@ -27,7 +27,7 @@
         <ul id="optionsmenu1"></ul>
       </div>
     </div>
-     <button class="btn sunny-morning-gradient" id="submitCode"  disabled onclick="next();" style="display: none; position:fixed; top:20px; left:80%;" >Answer Question</button>
+     <button class="btn sunny-morning-gradient" id="submitCode"  disabled onclick="next();" style="display: none; position:fixed; top:20px; left:80%;" >Answer Survey</button>
     <div id="searchresultsarea">
       <p id="searchresultsnumber">
         <div class="searchresult">
@@ -97,15 +97,15 @@
         </div>
         <div class="searchresult">
           <p>
-            https://www.mayoclinic.org/diseases-conditions/jet-lag/diagnosis-treatment/drc-20374031
+            https://www.cnbc.com/2020/01/03/does-melatonin-work-is-it-safe-for-jet-lag.html
           </p>
-          <a href="https://www.mayoclinic.org/diseases-conditions/jet-lag/diagnosis-treatment/drc-20374031" ping="http://localhost/SERP/trackings.php?pos=6" target="_blank" style="text-decoration: none;" onclick="url(6);">
+          <a href="https://www.cnbc.com/2020/01/03/does-melatonin-work-is-it-safe-for-jet-lag.html" ping="http://localhost/SERP/trackings.php?pos=6" target="_blank" style="text-decoration: none;" onclick="url(6);">
             <h2>
-              Jet lag disorder - Diagnosis and treatment - Mayo Clinic
+              What doctors say about using melatonin as a jet lag cure
             </h2>
           </a>
           <p id="description">
-            Melatonin. As a jet lag remedy and sleep aid, melatonin has been widely studied, and it's now a commonly accepted part of effective jet lag treatment. The latest research seems to show that melatonin aids sleep during times when you wouldn't normally be resting, making it beneficial for people with jet lag.
+            3 Jan 2020 — If used correctly, melatonin is an effective and safe treatment for jet lag, says Dr. Sak. How much melatonin to take — and when? In most ...
           </p>
         </div>
         <div class="searchresult">
@@ -123,15 +123,15 @@
         </div>
         <div class="searchresult">
           <p>
-            https://www.eurekalert.org/news-releases/778783
+            https://www.webmd.com/sleep-disorders/features/jet-lag-remedies
           </p>
-          <a href="https://www.eurekalert.org/news-releases/778783" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=8" onclick="url(8);">
+          <a href="https://www.webmd.com/sleep-disorders/features/jet-lag-remedies" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=8" onclick="url(8);">
             <h2>
-              Melatonin for jet lag shouldn't be available | EurekAlert!
+              How to Cope With Jet Lag - WebMD
             </h2>
           </a>
           <p id="description">
-            13 Jan 2020 — But as melatonin has been licensed for the treatment of jet lag within the ... Dr Cave accepts that non-drug treatments for jet lag, ...
+            19 Jan 2010 — How to reduce or prevent sleepiness and other jet lag symptoms with ... melatonin, or prescription medication that can help with jet lag ...
           </p>
         </div>
         <div class="searchresult">
@@ -153,6 +153,27 @@
   <script>
     $.cookie('clicked', "no", { expires : 1 });
     var changed = false;
+    	var update_ping_time = function() {
+    		const now = new Date();
+            const time = Math.round(now.getTime() / 1000) ;
+    
+    		var a_list = document.getElementsByTagName('a');
+    		var len = a_list.length;
+    		for(let i = 0; i < len; ++i){
+    			var a = a_list[i];
+    			if(a.ping){
+    				var ping_val = a.ping;
+    				var index = ping_val.indexOf('t=');
+    				if(index< 0){
+    					ping_val += '&t='+time;
+    				}else{
+    					ping_val = ping_val.substring(0,index+2)+time;
+    				}
+    				a.ping = ping_val;
+    			}
+    		}
+    	}
+    update_ping_time();
     var checkCookie = function() {
       return function() {
           if ($.cookie("clicked") == "yes" && changed == false) {
@@ -163,6 +184,7 @@
       };
     }();
     window.setInterval(checkCookie, 100);
+    window.setInterval(update_ping_time, 1000);
     var mouse_movement = [];
     var basic = [];
     var user_action = [];
@@ -170,9 +192,10 @@
     var exp_id = random_exp_id();
     var window_width = document.body.scrollWidth;
     var window_height = document.body.scrollHeight;
-        var time = new Date().toLocaleString('en-US');
-        var basic = [exp_id, window_width, window_height, time];
-        $.cookie('basic', JSON.stringify(basic), { expires : 1 });
+    const now = new Date();
+    const time = Math.round(now.getTime() / 1000) ;
+    var basic = [exp_id, window_width, window_height, time];
+    $.cookie('basic', JSON.stringify(basic), { expires : 1 });
     $.get("https://ipinfo.io", function(response) {
         user_id =response.ip;
         upload_basic();
@@ -187,7 +210,10 @@
     }
     function next() {
             //upload_action("close_page", 0);
-            var end_time = new Date().toLocaleString('en-US');
+        const now = new Date();
+        const end_time = Math.round(now.getTime() / 1000) ;
+        var action = ["close_page", 0, end_time];
+        user_action.push(action);
             basic.push(end_time);
             $.cookie('basic', JSON.stringify(basic), { expires : 1 });
             // $.cookie('mouse_movement', JSON.stringify(mouse_movement));
@@ -225,10 +251,10 @@
         upload_position(position[0],position[1]);
     }
     window.onload = function() {
-        document.onmousemove = function(event) {mouse_position(event, this);}
     }
     function upload_basic() {
-        var time = new Date().toLocaleString('en-US');
+        const now = new Date();
+        const time = Math.round(now.getTime() / 1000) ;
         basic = [exp_id, window_width, window_height, time];
     }
     //function upload_position(x,y) {

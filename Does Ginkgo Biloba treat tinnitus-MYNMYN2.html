@@ -27,7 +27,7 @@
         <ul id="optionsmenu1"></ul>
       </div>
     </div>
-     <button class="btn sunny-morning-gradient" id="submitCode"  disabled onclick="next();" style="display: none; position:fixed; top:20px; left:80%;" >Answer Question</button>
+     <button class="btn sunny-morning-gradient" id="submitCode"  disabled onclick="next();" style="display: none; position:fixed; top:20px; left:80%;" >Answer Survey</button>
     <div id="searchresultsarea">
       <p id="searchresultsnumber">
         <div class="searchresult">
@@ -84,28 +84,28 @@
         </div>
         <div class="searchresult">
           <p>
-            https://doaj.org/article/0c84886966dd47e88163750b8f8115bf
+            http://medcraveonline.com/JOENTR/JOENTR-09-00298.pdf
           </p>
-          <a href="https://doaj.org/article/0c84886966dd47e88163750b8f8115bf" ping="http://localhost/SERP/trackings.php?pos=5" target="_blank" style="text-decoration: none;" onclick="url(5);">
+          <a href="http://medcraveonline.com/JOENTR/JOENTR-09-00298.pdf" ping="http://localhost/SERP/trackings.php?pos=5" target="_blank" style="text-decoration: none;" onclick="url(5);">
             <h2>
-              The Comparison of Ginkgo biloba and Cinnarizine ... - DOAJ
+              A Clinical Study of Tinnitus - MedCrave
             </h2>
           </a>
           <p id="description">
-            1 Jan 2015 — In the present study, effectiveness of Ginkgo biloba with that of cinnarizine on subjective tinnitus were compared and assessed in order to ...
+            21 Dec 2017 — Ginkgo Biloba and Multivitamin for the Treatment of Tinnitus and their Effect. Keywords: Tinnitus; Tchqs; Hearing loss; Carvoverine; ...
           </p>
         </div>
         <div class="searchresult">
           <p>
-            https://www.verywellhealth.com/natural-remedies-for-tinnitus-89317
+            https://www.cochrane.org/CD003852/ENT_ginkgo-biloba-for-tinnitus
           </p>
-          <a href="https://www.verywellhealth.com/natural-remedies-for-tinnitus-89317" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=6" onclick="url(6);">
+          <a href="https://www.cochrane.org/CD003852/ENT_ginkgo-biloba-for-tinnitus" target="_blank" style="text-decoration: none;" ping="http://localhost/SERP/trackings.php?pos=6" onclick="url(6);">
             <h2>
-              Natural Remedies for Tinnitus - Verywell Health
+              Ginkgo biloba for tinnitus | Cochrane
             </h2>
           </a>
           <p id="description">
-            Ginkgo Biloba — An herb said to stimulate circulation, ginkgo biloba may have an impact on a subset of people with tinnitus. For a report published in the ...
+            28 Mar 2013 — Few good-quality trials were found. Four studies were included in the review, with a total of 1543 participants. The included studies were ...
           </p>
         </div>
       </p>
@@ -114,6 +114,27 @@
   <script>
     $.cookie('clicked', "no", { expires : 1 });
     var changed = false;
+    	var update_ping_time = function() {
+    		const now = new Date();
+            const time = Math.round(now.getTime() / 1000) ;
+    
+    		var a_list = document.getElementsByTagName('a');
+    		var len = a_list.length;
+    		for(let i = 0; i < len; ++i){
+    			var a = a_list[i];
+    			if(a.ping){
+    				var ping_val = a.ping;
+    				var index = ping_val.indexOf('t=');
+    				if(index< 0){
+    					ping_val += '&t='+time;
+    				}else{
+    					ping_val = ping_val.substring(0,index+2)+time;
+    				}
+    				a.ping = ping_val;
+    			}
+    		}
+    	}
+    update_ping_time();
     var checkCookie = function() {
       return function() {
           if ($.cookie("clicked") == "yes" && changed == false) {
@@ -124,6 +145,7 @@
       };
     }();
     window.setInterval(checkCookie, 100);
+    window.setInterval(update_ping_time, 1000);
     var mouse_movement = [];
     var basic = [];
     var user_action = [];
@@ -131,9 +153,10 @@
     var exp_id = random_exp_id();
     var window_width = document.body.scrollWidth;
     var window_height = document.body.scrollHeight;
-        var time = new Date().toLocaleString('en-US');
-        var basic = [exp_id, window_width, window_height, time];
-        $.cookie('basic', JSON.stringify(basic), { expires : 1 });
+    const now = new Date();
+    const time = Math.round(now.getTime() / 1000) ;
+    var basic = [exp_id, window_width, window_height, time];
+    $.cookie('basic', JSON.stringify(basic), { expires : 1 });
     $.get("https://ipinfo.io", function(response) {
         user_id =response.ip;
         upload_basic();
@@ -148,7 +171,10 @@
     }
     function next() {
             //upload_action("close_page", 0);
-            var end_time = new Date().toLocaleString('en-US');
+        const now = new Date();
+        const end_time = Math.round(now.getTime() / 1000) ;
+        var action = ["close_page", 0, end_time];
+        user_action.push(action);
             basic.push(end_time);
             $.cookie('basic', JSON.stringify(basic), { expires : 1 });
             // $.cookie('mouse_movement', JSON.stringify(mouse_movement));
@@ -186,10 +212,10 @@
         upload_position(position[0],position[1]);
     }
     window.onload = function() {
-        document.onmousemove = function(event) {mouse_position(event, this);}
     }
     function upload_basic() {
-        var time = new Date().toLocaleString('en-US');
+        const now = new Date();
+        const time = Math.round(now.getTime() / 1000) ;
         basic = [exp_id, window_width, window_height, time];
     }
     //function upload_position(x,y) {

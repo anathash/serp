@@ -109,26 +109,26 @@
 								<br>
 
 								<input type="radio" name="treatment" id ="hormone" value="hormone" >
-								<label for="gender-female">A hormone.</label><br>
+								<label for="hormone">A hormone.</label><br>
 								
 								<input type="radio" name="treatment" id ="nutrients" value="nutrients ">
-								<label for="gender-male">A nutrient found mostly in fish, nuts and seeds.</label><br>
+								<label for="nutrients">A nutrient found mostly in fish, nuts and seeds.</label><br>
 								
 								<input type="radio" name="treatment" id ="tree" value="tree">
-								<label for="gender-other">A tree.</label><br>
+								<label for="tree">A tree.</label><br>
 								</p>
 					</div>
 								<div class="row">
 								<p style="font-size:120%;">What is  <span style="color: #993333"><?php echo $_COOKIE['topic0']; ?></span>?
 								<br>							
 								<input type="radio" name="condition" id ="neurological" value="neurological" >
-								<label for="gender-female">A neurological disorder.</label><br>
+								<label for="neurological">A neurological disorder.</label><br>
 								
 								<input type="radio" name="condition" id ="ringing" value="ringing">
-								<label for="gender-male">Ringing noise in one or both ears.</label><br>
+								<label for="ringing">Ringing noise in one or both ears.</label><br>
 								
 								<input type="radio" name="condition" id ="sleep" value="sleep">
-								<label for="gender-other">A sleep problem.</label><br>
+								<label for="sleep">A sleep problem.</label><br>
 								</p>
 
 					</div>

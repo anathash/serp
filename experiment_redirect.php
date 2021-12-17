@@ -2,10 +2,10 @@
 
 include 'db_vars.php';
 ini_set("display_errors", "stderr");
-
+date_default_timezone_set('UTC');
 error_reporting(E_ALL);
 
-
+$debug = false;
 $DATABASE = 'serp';
 
 $db_connection = new mysqli($SERVER, $USERNAME, $PASSWORD, $DATABASE);
@@ -49,10 +49,18 @@ if (!empty($_COOKIE["user"])){
 //            $insert = $db_connection->prepare("INSERT INTO  serp.user_mouse (exp_id, user_id, x, y, date)VALUES( ?, ?, ?, ?, ?)");
 //            $insert->bind_param("sssss", $basic[1], $basic[0], $postion[0], $postion[1], $postion[2]);
 //            $insert->execute();
-//        }
+//        }	
 
+		#$start_time =  date('m/d/Y, h:i:s A', $basic[3]);
+		#$end_time =   date('m/d/Y, h:i:s A', $basic[4]);
+		$dt = new DateTime("@$basic[3]"); // convert UNIX timestamp to PHP DateTime
+		$start_time  = $dt->format('m/d/Y, h:i:s A');
+		$dt = new DateTime("@$basic[4]"); // convert UNIX timestamp to PHP DateTime
+		$end_time  = $dt->format('m/d/Y, h:i:s A');
+		
+		
         $insert_basic = $db_connection->prepare("INSERT INTO serp.exp_data (exp_id, user_id, test_url, window_width, window_height, query, sequence, start, end, knowledge, feedback, reason, treatment, problem, comments)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
-        $insert_basic->bind_param("sssssssssssssss", $basic[0], $_COOKIE["user"], $_COOKIE["url"], $basic[1], $basic[2],$_COOKIE["query"],$_COOKIE["sequence"], $basic[3], $basic[4], $_COOKIE['knowledge'], $_POST['feedback'], $_POST['reason'],$_POST['treatment'],$_POST['condition'], $_POST['comments']);
+        $insert_basic->bind_param("sssssssssssssss", $basic[0], $_COOKIE["user"], $_COOKIE["url"], $basic[1], $basic[2],$_COOKIE["query"],$_COOKIE["sequence"], $start_time, $end_time, $_COOKIE['knowledge'], $_POST['feedback'], $_POST['reason'],$_POST['treatment'],$_POST['condition'], $_POST['comments']);
         $insert_basic->execute();
 		
 			
@@ -60,12 +68,12 @@ if (!empty($_COOKIE["user"])){
         $update_used->bind_param("s", $_COOKIE["url"]);
         $update_used->execute();
 
-        $t = date("m/d/Y, h:i:s A");
+        #$t = date("m/d/Y, h:i:s A");
         $i1 = 0;
         $str1 = "close page";
 
         $insert_action = $db_connection->prepare("INSERT INTO serp.user_action(exp_id, user_id, action, link_id, date)VALUES(?,?,?,?,?)");
-        $insert_action->bind_param("sssss", $basic[0], $_COOKIE["user"], $str1, $i1,  $t);
+        $insert_action->bind_param("sssss", $basic[0], $_COOKIE["user"], $str1, $i1,  $end_time);
         $insert_action->execute();
 
 
@@ -94,21 +102,23 @@ if (!empty($_COOKIE["user"])){
         setcookie("basic", '');
         //setcookie("mouse_movement", '');
     }else{
-        echo $_COOKIE['basic'];
-        echo "<br>";
-        echo $_COOKIE['user_action'];
-        echo "<br>";
-        echo $_COOKIE['user_view'];
-        echo "<br>";
-        echo $_POST['feedback'];
-        echo "<br>";
-        setcookie("url", "");
-        setcookie("query", "");
-        setcookie("sequence", "");
-        setcookie("topic0", "");
-        setcookie("topic1", "");
-        setcookie("basic", '');
-        setcookie("mouse_movement", '');
+		if ($debug){
+			echo $_COOKIE['basic'];
+			echo "<br>";
+			echo $_COOKIE['user_action'];
+			echo "<br>";
+			echo $_COOKIE['user_view'];
+			echo "<br>";
+			echo $_POST['feedback'];
+			echo "<br>";
+			setcookie("url", "");
+			setcookie("query", "");
+			setcookie("sequence", "");
+			setcookie("topic0", "");
+			setcookie("topic1", "");
+			setcookie("basic", '');
+			setcookie("mouse_movement", '');
+		}
 
 //        echo "
 //        <script>
