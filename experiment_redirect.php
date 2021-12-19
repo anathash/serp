@@ -5,15 +5,15 @@ ini_set("display_errors", "stderr");
 date_default_timezone_set('UTC');
 error_reporting(E_ALL);
 
-$debug = false;
+$debug = true;
 $DATABASE = 'serp';
 
 $db_connection = new mysqli($SERVER, $USERNAME, $PASSWORD, $DATABASE);
 
-#$myfile = fopen("./dumps.txt", "w") or die("Unable to open file!");
-#var_dump($GLOBALS);
-#$data = ob_get_clean();
-#fwrite($myfile, $data);
+//$myfile = fopen("./dumps.txt", "w") or die("Unable to open file!");
+//var_dump($GLOBALS);
+//$data = ob_get_clean();
+//fwrite($myfile, $data);
 
 $expire = time() + 60 * 60 * 24 ; //1day
 
@@ -38,32 +38,38 @@ if (!empty($_COOKIE["user"])){
 //
 //    } else
 //    if (isset($_COOKIE['basic'])&&isset($_COOKIE['user_action'])&&isset($_COOKIE['user_view'])&&isset($_POST['feedback'])&&isset($_COOKIE['knowledge'])){
-    if (isset($_COOKIE['basic'])&&isset($_COOKIE['user_action'])&&isset($_POST['feedback'])&&isset($_COOKIE['knowledge'])){
+//    if (isset($_COOKIE['basic'])&&isset($_COOKIE['user_action'])&&isset($_POST['feedback'])&&isset($_COOKIE['knowledge'])){
+    if (isset($_COOKIE['basic'])){
         setcookie("knowledge", "");
         $basic = json_decode($_COOKIE['basic']);
 //        $mouse_movement = json_decode($_COOKIE['mouse_movement']);
-        $user_action = json_decode($_COOKIE['user_action']);
+
 //        $user_view = json_decode($_COOKIE['user_view']);
 
 //        foreach ($mouse_movement as $postion){
 //            $insert = $db_connection->prepare("INSERT INTO  serp.user_mouse (exp_id, user_id, x, y, date)VALUES( ?, ?, ?, ?, ?)");
 //            $insert->bind_param("sssss", $basic[1], $basic[0], $postion[0], $postion[1], $postion[2]);
 //            $insert->execute();
-//        }	
+//        }
 
 		#$start_time =  date('m/d/Y, h:i:s A', $basic[3]);
 		#$end_time =   date('m/d/Y, h:i:s A', $basic[4]);
 		$dt = new DateTime("@$basic[3]"); // convert UNIX timestamp to PHP DateTime
 		$start_time  = $dt->format('m/d/Y, h:i:s A');
-		$dt = new DateTime("@$basic[4]"); // convert UNIX timestamp to PHP DateTime
+		//$dt = new DateTime("@$basic[4]"); // convert UNIX timestamp to PHP DateTime
+		$etc = json_decode($_COOKIE['end_time']);
+		$dt = new DateTime("@$etc"); // convert UNIX timestamp to PHP DateTime
 		$end_time  = $dt->format('m/d/Y, h:i:s A');
-		
-		
+
+		$knowledge='';
+		if (isset($_COOKIE['knowledge'])){
+			$knowledge=$_COOKIE['knowledge'];
+		}
         $insert_basic = $db_connection->prepare("INSERT INTO serp.exp_data (exp_id, user_id, test_url, window_width, window_height, query, sequence, start, end, knowledge, feedback, reason, treatment, problem, comments)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
-        $insert_basic->bind_param("sssssssssssssss", $basic[0], $_COOKIE["user"], $_COOKIE["url"], $basic[1], $basic[2],$_COOKIE["query"],$_COOKIE["sequence"], $start_time, $end_time, $_COOKIE['knowledge'], $_POST['feedback'], $_POST['reason'],$_POST['treatment'],$_POST['condition'], $_POST['comments']);
+        $insert_basic->bind_param("sssssssssssssss", $basic[0], $_COOKIE["user"], $_COOKIE["url"], $basic[1], $basic[2],$_COOKIE["query"],$_COOKIE["sequence"], $start_time, $end_time, $knowledge, $_POST['feedback'], $_POST['reason'],$_POST['treatment'],$_POST['condition'], $_POST['comments']);
         $insert_basic->execute();
-		
-			
+
+
         $update_used = $db_connection->prepare("UPDATE serp.config_data SET answered = answered + 1 WHERE URL = ?");
         $update_used->bind_param("s", $_COOKIE["url"]);
         $update_used->execute();
@@ -71,27 +77,32 @@ if (!empty($_COOKIE["user"])){
         #$t = date("m/d/Y, h:i:s A");
         $i1 = 0;
         $str1 = "close page";
+		$cpt = json_decode($_COOKIE['close_page']);
+		$dt = new DateTime("@$cpt"); // convert UNIX timestamp to PHP DateTime
+		$close_page = $dt->format('m/d/Y, h:i:s A');
 
         $insert_action = $db_connection->prepare("INSERT INTO serp.user_action(exp_id, user_id, action, link_id, date)VALUES(?,?,?,?,?)");
-        $insert_action->bind_param("sssss", $basic[0], $_COOKIE["user"], $str1, $i1,  $end_time);
+        $insert_action->bind_param("sssss", $basic[0], $_COOKIE["user"], $str1, $i1,  $close_page);
         $insert_action->execute();
 
-
-        foreach ($user_action as $action){
-        //            if ($action[1] == "close_page"){
-        //                $insert_action = $db_connection->prepare("INSERT INTO serp.user_action(exp_id, user_id, action, link_id, date)VALUES(?,?,?,?,?)");
-        //                $insert_action->bind_param("sssss", $basic[0], $_COOKIE["user"], $action[1], $action[0], $action[2]);
-        //                $insert_action->execute();
-        //
-        //                $update_action = $db_connection->prepare("UPDATE serp.exp_data SET end = ? WHERE exp_id = ?");
-        //                $update_action->bind_param("ss",$action[2], $basic[1]);
-        //                $update_action->execute();
-        //            }else{
-                $insert_action = $db_connection->prepare("INSERT INTO serp.user_action(exp_id, user_id, action, link_id, date)VALUES(?,?,?,?,?)");
-                $insert_action->bind_param("sssss", $basic[0], $_COOKIE["user"], $action[1], $action[0], $action[2]);
-                $insert_action->execute();
-        //           }
-        }
+		 if (isset($_COOKIE['user_action'])){
+			$user_action = json_decode($_COOKIE['user_action']);
+			foreach ($user_action as $action){
+			//            if ($action[1] == "close_page"){
+			//                $insert_action = $db_connection->prepare("INSERT INTO serp.user_action(exp_id, user_id, action, link_id, date)VALUES(?,?,?,?,?)");
+			//                $insert_action->bind_param("sssss", $basic[0], $_COOKIE["user"], $action[1], $action[0], $action[2]);
+			//                $insert_action->execute();
+			//
+			//                $update_action = $db_connection->prepare("UPDATE serp.exp_data SET end = ? WHERE exp_id = ?");
+			//                $update_action->bind_param("ss",$action[2], $basic[1]);
+			//                $update_action->execute();
+			//            }else{
+					$insert_action = $db_connection->prepare("INSERT INTO serp.user_action(exp_id, user_id, action, link_id, date)VALUES(?,?,?,?,?)");
+					$insert_action->bind_param("sssss", $basic[0], $_COOKIE["user"], $action[1], $action[0], $action[2]);
+					$insert_action->execute();
+			//           }
+			}
+		 }
 
         //foreach ($user_view as $view){
          //   $insert_view = $db_connection->prepare("INSERT INTO serp.user_view (exp_id, user_id, view, date)VALUES(?,?,?,?);");
@@ -186,7 +197,7 @@ if (!empty($_COOKIE["user"])){
         setcookie("topic0", "");
         setcookie("topic1", "");
 
-		
+
         echo "
                 <script>
                     window.location.href='end.php?code=$random_str';

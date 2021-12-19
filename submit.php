@@ -13,6 +13,12 @@ $required_answers_per_query = 1;
 #$PORT = 3306;
 #$PASSWORD = 'Fall2021!!';
 
+//$myfile = fopen("./dumps.txt", "w") or die("Unable to open file!");
+//var_dump($GLOBALS);
+//$data = ob_get_clean();
+//fwrite($myfile, $data);
+
+
 $db_connection = new mysqli($SERVER, $USERNAME, $PASSWORD, $DATABASE);
 
 

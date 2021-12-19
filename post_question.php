@@ -94,6 +94,9 @@
 							alert("Please answer the all the questions");
 							return false;
 						}
+						const now = new Date();
+						const end_time = Math.round(now.getTime() / 1000) ;
+						$.cookie('end_time', end_time, { expires : 1 });
 						return true;
 					}
 			</script>
