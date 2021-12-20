@@ -1,6 +1,6 @@
 <?php
 include 'db_vars.php';
-session_start();
+#session_start();
 ini_set("display_errors", "stderr");
 date_default_timezone_set('UTC');
 error_reporting(E_ALL);

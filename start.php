@@ -98,4 +98,4 @@ if(!empty($_COOKIE["user"])){
         </script>";
 }
 mysqli_close($db_connection);
-
+?>
