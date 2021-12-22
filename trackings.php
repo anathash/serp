@@ -7,10 +7,10 @@ error_reporting(E_ALL);
 
 
 $expire = time() + 60 * 60 * 24 ; //1day
-//$myfile = fopen("./dumps.txt", "w") or die("Unable to open file!");
-//var_dump($GLOBALS);
-//$data = ob_get_clean();
-//fwrite($myfile, $data);
+$myfile = fopen("./dumps.txt", "w") or die("Unable to open file!");
+var_dump($GLOBALS);
+$data = ob_get_clean();
+fwrite($myfile, $data);
 
 
 //if (isset($_COOKIE['basic'])){
@@ -48,8 +48,10 @@ else{
 	  $insert_action->execute();
       $insert_action->close();
 }
-
 setcookie("clicked",  "yes", $expire);
+header("Location: ".$_GET['entry']);
+die();
+
 
 //    $insert_action = $db_connection->prepare("INSERT INTO serp.user_action (exp_id, user_id, action, link_id, date) VALUES(?,?,?,?,?);");
 //    $str1 = "test";
