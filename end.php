@@ -1,6 +1,6 @@
 <html lang="en">
 <head>
-    <title>SERP</title>
+    <title>SERP_test</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -80,12 +80,14 @@
         <div class="jumbotron cloudy-knoxville-gradient">
             <div class="container">
                 <h4> The test is finished, thank you for participating. Don't forget to enter your compilation verification code:		
-				<br>
-				<span style="color: #3875d7"><?php echo $_GET['code']; ?></span> 
+				<br><div class="container">
+                        <span style="color: #3875d7"><?php echo $_GET['code']; ?></span>
+                    </div>
+
 				</h4>
 				<h3>				
 				<br><br>
-				<span style="color: #FF0000">Importnant:</span>.
+				<span style="color: #FF0000">Importnant:</span>
 				This was an academic survey, you should not rely on the content your read to infer the true effecitvness of 
 				 <?php echo $_COOKIE['topic1']; ?> as a treatment for <?php echo $_COOKIE['topic0']; ?>!
 				<br>

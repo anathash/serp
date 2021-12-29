@@ -5,7 +5,7 @@ ini_set("display_errors", "stderr");
 error_reporting(E_ALL);
 $expire = time() + 60 * 60 * 24 ; //1day
 
-$db_connection = new mysqli($SERVER, $USERNAME, $PASSWORD, $DATABASE);
+$db_connection = new mysqli($SERVER, $USERNAME, $PASSWORD);
 
 setcookie("user", '');
 if (mysqli_connect_errno()) {
@@ -16,11 +16,12 @@ if (mysqli_connect_errno()) {
         </script>";
 }
 if (isset($_POST['ID'])) {
+
     $amazon_id = $_POST["ID"];
     setcookie("user", $amazon_id, $expire);		
-    $find_user ="SELECT * FROM serp.user_config WHERE amazon_id = ?";
+    $find_user ="SELECT * FROM serp_test.user_config WHERE amazon_id = ?";
     $stmt = $db_connection->prepare($find_user);
-    $stmt->bind_param("s", $_POST['ID']);
+    $stmt->bind_param("s", $_POST["ID"]);
     $stmt->execute();
     $stmt->bind_result($id, $amazon,$finished);
     $result = $stmt->fetch();
@@ -28,8 +29,8 @@ if (isset($_POST['ID'])) {
     if($finished !=""){
         echo "
                 <script>
-                    alert('The test is finished, Thank you for participating. Don\'t forget to fill out the rest of the survey and enter your compilation verification code: $finished');
-                    window.location.href='index.html';
+                    alert('You finished test according to our record, you will start a new test for very beginning, thank you for participating!'+'');
+                    window.location.href='submit.php';
                 </script>";
     }
 }
@@ -38,7 +39,7 @@ if (isset($_POST['ID'])) {
 ?>
 <html lang="en">
 <head>
-    <title>SERP</title>
+    <title>SERP_test</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">

@@ -1,6 +1,6 @@
 <html lang="en">
 <head>
-    <title>SERP</title>
+    <title>SERP_test</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -77,12 +77,28 @@
 <script>
     function no() {
 		$.cookie("knowledge", "no", { expires : 1 });
+        if ($.cookie('exp_id') === ""){
+            exp_id = random_exp_id();
+            $.cookie("exp_id", exp_id, { expires : 1 });
+        }
         window.location.href = $.cookie('url');
     }
 
     function yes() {
 		$.cookie("knowledge", "yes", { expires : 1 });
+        if ($.cookie('exp_id') === ""){
+            exp_id = random_exp_id();
+            $.cookie("exp_id", exp_id, { expires : 1 });
+        }
         window.location.href = $.cookie('url');
+    }
+
+    function random_exp_id() {
+        var t = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678",
+            a = t.length,
+            id = "";
+        for (i = 0; i < 8; i++) id += t.charAt(Math.floor(Math.random() * a));
+        return id
     }
 </script>
 <br>

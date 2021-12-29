@@ -20,7 +20,7 @@ $pos = $_GET['pos'];
 $tget = $_GET['t'];
 $dt = new DateTime("@$tget"); // convert UNIX timestamp to PHP DateTime
 $t  = $dt->format('m/d/Y, h:i:s A');
-
+fwrite($myfile, "1");
 
 #    $t = date("m/d/Y, h:i:s A");
 $action = 'click link';
@@ -38,22 +38,27 @@ if($cookies_update){
 		$array = [$tamp];
 		setcookie("user_action",  json_encode($array), $expire);
 	}
+	fwrite($myfile, "2");
 }
 else{
+	fwrite($myfile, "3");
 	  $db_connection = new mysqli($SERVER, $USERNAME, $PASSWORD, $DATABASE);
 	  //$basic = json_decode($_COOKIE['basic']);
-      $insert_action = $db_connection->prepare("INSERT INTO serp.user_action(exp_id, user_id, action, link_id, date)VALUES(?,?,?,?,?);");
+      $insert_action = $db_connection->prepare("INSERT INTO serp_test.user_action(exp_id, user_id, action, link_id, date)VALUES(?,?,?,?,?);");
 	  //$insert_action->bind_param("sssss", $basic[0], $_COOKIE["user"], $action, $pos, $t);
 	  $insert_action->bind_param("sssss", $_GET['exp'], $_GET["user"], $action, $pos, $t);
 	  $insert_action->execute();
       $insert_action->close();
+	fwrite($myfile, "4");
 }
+fwrite($myfile, "5");
 setcookie("clicked",  "yes", $expire);
 header("Location: ".$_GET['entry']);
+fwrite($myfile, "6");
 die();
 
 
-//    $insert_action = $db_connection->prepare("INSERT INTO serp.user_action (exp_id, user_id, action, link_id, date) VALUES(?,?,?,?,?);");
+//    $insert_action = $db_connection->prepare("INSERT INTO serp_test.user_action (exp_id, user_id, action, link_id, date) VALUES(?,?,?,?,?);");
 //    $str1 = "test";
 //    $insert_action->bind_param("sssss", $str1, $str1, $action, $pos, $t);
 //    $insert_action->execute();

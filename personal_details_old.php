@@ -26,7 +26,7 @@ else{
 			window.location.href='index.html';
 		</script>";
 }
-$find_user ="SELECT * FROM serp.user_config WHERE amazon_id = ?";
+$find_user ="SELECT * FROM serp_test.user_config WHERE amazon_id = ?";
 $stmt = $db_connection->prepare($find_user);
 $stmt->bind_param("s", $_POST['ID']);
 $stmt->execute();
@@ -45,7 +45,7 @@ if($finished !=""){
 ?>
 <html lang="en">
 <head>
-    <title>SERP</title>
+    <title>SERP_test</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
