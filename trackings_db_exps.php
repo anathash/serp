@@ -8,7 +8,7 @@ $USERNAME = 'root';
 $PORT = 3306;
 #$PASSWORD = 'Fall2021!!';
 $PASSWORD = 'anat';
-$DATABASE = 'serp_test';
+$DATABASE = 'serp';
 $myfile = fopen("./pings.txt", "a") or die("Unable to open file!");
 $db_connection = new mysqli($SERVER, $USERNAME, $PASSWORD, $DATABASE);
 if ($db_connection->connect_error) {
@@ -29,7 +29,7 @@ if (isset($_COOKIE['basic'])){
 	$t = date("m/d/Y, h:i:s A");  
 	$action = 'click link';
 	fwrite($myfile, $basic[0].",".$_COOKIE["user"].","."click link".$pos.",".$t);	
-	$insert_action = $db_connection->prepare("INSERT INTO serp_test.user_action (exp_id, user_id, action, link_id, date) VALUES(?,?,?,?,?);");
+	$insert_action = $db_connection->prepare("INSERT INTO serp.user_action (exp_id, user_id, action, link_id, date) VALUES(?,?,?,?,?);");
 	$insert_action->bind_param("sssss", $basic[0], $_COOKIE["user"], $action, $pos, $t);
 	$insert_action->execute();
 	$insert_action->close();
@@ -48,7 +48,7 @@ if (isset($_COOKIE['basic'])){
 	#fwrite($myfile,$result);
 	#fwrite($myfile,$insert_action->fullQuery);
 	
-#	$sql = "INSERT INTO serp_test.user_action (exp_id, user_id, action, link_id, date) VALUES ('c87ZeWnQ', 'u1', 'click link', '11','12/2/2021, 8:27:58 PM' )";
+#	$sql = "INSERT INTO serp.user_action (exp_id, user_id, action, link_id, date) VALUES ('c87ZeWnQ', 'u1', 'click link', '11','12/2/2021, 8:27:58 PM' )";
 #	if (mysqli_query($db_connection, $sql)) {
 #		fwrite($myfile,"New record created successfully");
 #	} else {

@@ -21,7 +21,7 @@ if(!empty($_COOKIE["user"])){
 
     if(isset($_COOKIE["continue"])){
         setcookie("continue", '');
-        $s ="SELECT * FROM serp_test.round_robin WHERE amazon_id = \"". $amazon_id."\"";
+        $s ="SELECT * FROM serp.round_robin WHERE amazon_id = \"". $amazon_id."\"";
         $html_list = mysqli_query($db_connection,$s);
         while($row = mysqli_fetch_array($html_list)){
             $url = $row["URL"];
@@ -45,10 +45,10 @@ if(!empty($_COOKIE["user"])){
         }
 
     }else{
-//        $insert = $db_connection->prepare("UPDATE serp_test.user_config SET knowledge = 0 WHERE amazon_id = ?");
+//        $insert = $db_connection->prepare("UPDATE serp.user_config SET knowledge = 0 WHERE amazon_id = ?");
 //        $insert->bind_param("s", $amazon_id);
 //        $insert->execute();
-        $s ="SELECT * FROM serp_test.round_robin WHERE amazon_id = \"". $amazon_id."\"";
+        $s ="SELECT * FROM serp.round_robin WHERE amazon_id = \"". $amazon_id."\"";
         $html_list = mysqli_query($db_connection,$s);
         while($row = mysqli_fetch_array($html_list)){
             $url = $row["URL"];
@@ -75,7 +75,7 @@ if(!empty($_COOKIE["user"])){
     }
 
 //    else if(isset($_COOKIE['knowledge'])&&$_COOKIE['knowledge'] == "yes"){
-//        $insert = $db_connection->prepare("UPDATE serp_test.user_config SET knowledge = 1 WHERE amazon_id = ?");
+//        $insert = $db_connection->prepare("UPDATE serp.user_config SET knowledge = 1 WHERE amazon_id = ?");
 //        $insert->bind_param("s", $amazon_id);
 //        $insert->execute();
 //        echo "

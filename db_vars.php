@@ -1,6 +1,6 @@
 <?php
 //biu server
-// $USERNAME = 'serp_test_user';
+// $USERNAME = 'serp_user';
 // $PASSWORD = 'YpkYNyMA4qWtJA';
 
 // virginia server
@@ -13,5 +13,5 @@ $PASSWORD = 'Fall2021!!';
 //$USERNAME = 'root';
 //$PASSWORD = 'anat';
 //$PORT = 3306;
-$DATABASE = 'serp_test';
+$DATABASE = 'serp';
 ?>

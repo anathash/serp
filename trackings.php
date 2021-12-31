@@ -44,7 +44,7 @@ else{
 	fwrite($myfile, "3");
 	  $db_connection = new mysqli($SERVER, $USERNAME, $PASSWORD, $DATABASE);
 	  //$basic = json_decode($_COOKIE['basic']);
-      $insert_action = $db_connection->prepare("INSERT INTO serp_test.user_action(exp_id, user_id, action, link_id, date)VALUES(?,?,?,?,?);");
+      $insert_action = $db_connection->prepare("INSERT INTO serp.user_action(exp_id, user_id, action, link_id, date)VALUES(?,?,?,?,?);");
 	  //$insert_action->bind_param("sssss", $basic[0], $_COOKIE["user"], $action, $pos, $t);
 	  $insert_action->bind_param("sssss", $_GET['exp'], $_GET["user"], $action, $pos, $t);
 	  $insert_action->execute();
@@ -58,7 +58,7 @@ fwrite($myfile, "6");
 die();
 
 
-//    $insert_action = $db_connection->prepare("INSERT INTO serp_test.user_action (exp_id, user_id, action, link_id, date) VALUES(?,?,?,?,?);");
+//    $insert_action = $db_connection->prepare("INSERT INTO serp.user_action (exp_id, user_id, action, link_id, date) VALUES(?,?,?,?,?);");
 //    $str1 = "test";
 //    $insert_action->bind_param("sssss", $str1, $str1, $action, $pos, $t);
 //    $insert_action->execute();
