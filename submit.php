@@ -75,8 +75,11 @@ if (isset($_COOKIE['user'])) {
 //        while($entry = mysqli_fetch_row($find_entry)) {
 //            $q = "SELECT URL,query,sequence,topic0, topic1 FROM serp.config_data WHERE entry_file =\"".$entry[0]."\" AND answered < 3 ORDER BY used ASC limit 1;";
 //            $q = "SELECT URL,query,sequence,topic0, topic1 FROM serp.config_data WHERE entry_file =\"".$entry[0]."\" ORDER BY answered ASC limit 1;";
-            $q = "SELECT URL,query,sequence,topic0, topic1 FROM serp.config_data WHERE answered < 3 ORDER BY used ASC limit 1;";
-//            $q = "SELECT URL,query,sequence,topic0, topic1 FROM serp.config_data ORDER BY used ASC limit 1;";
+//select all:
+//            $q = "SELECT URL,query,sequence,topic0, topic1 FROM serp.config_data WHERE answered < 1 ORDER BY used ASC limit 1;";
+//selected maybe ads:
+
+            $q = "SELECT URL,query,sequence,topic0, topic1 FROM serp.config_data WHERE sequence LIKE 'S%' and answered < needed_answers ORDER BY used ASC limit 1;";			
 //            $html_list = mysqli_query($db_connection, $q);
             $html_list = mysqli_query($db_connection, $q);
             while($row = mysqli_fetch_row($html_list)){

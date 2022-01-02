@@ -28,7 +28,7 @@ if (isset($_POST['ID'])) {
     if($finished !=""){
         echo "
                 <script>
-                    alert('The test is finished, Thank you for participating. Don\'t forget to fill out the rest of the survey and enter your compilation verification code: $finished');
+                    alert('You have already completed this survey in the past.');
                     window.location.href='index.html';
                 </script>";
     }

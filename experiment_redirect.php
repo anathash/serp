@@ -10,10 +10,10 @@ $DATABASE = 'serp';
 
 $db_connection = new mysqli($SERVER, $USERNAME, $PASSWORD, $DATABASE);
 
-//$myfile = fopen("./dumps.txt", "w") or die("Unable to open file!");
-//var_dump($GLOBALS);
-//$data = ob_get_clean();
-//fwrite($myfile, $data);
+$myfile = fopen("./dumps.txt", "w") or die("Unable to open file!");
+var_dump($GLOBALS);
+$data = ob_get_clean();
+fwrite($myfile, $data);
 
 $expire = time() + 60 * 60 * 24 ; //1day
 
@@ -65,8 +65,9 @@ if (!empty($_COOKIE["user"])){
 		if (isset($_COOKIE['knowledge'])){
 			$knowledge=$_COOKIE['knowledge'];
 		}
-        $insert_basic = $db_connection->prepare("INSERT INTO serp.exp_data (exp_id, user_id, test_url, window_width, window_height, query, sequence, start, end, knowledge, feedback, reason, treatment, problem, comments)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
-        $insert_basic->bind_param("sssssssssssssss", $basic[0], $_COOKIE["user"], $_COOKIE["url"], $basic[1], $basic[2],$_COOKIE["query"],$_COOKIE["sequence"], $start_time, $end_time, $knowledge, $_POST['feedback'], $_POST['reason'],$_POST['treatment'],$_POST['condition'], $_POST['comments']);
+
+        $insert_basic = $db_connection->prepare("INSERT INTO serp.exp_data (exp_id, user_id, test_url, window_width, window_height, query, sequence, start, end, knowledge, feedback, reason, treatment, problem, comments, ad_exp_effect, ad_dec_effect, ad_comments )VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+        $insert_basic->bind_param("ssssssssssssssssss", $basic[0], $_COOKIE["user"], $_COOKIE["url"], $basic[1], $basic[2],$_COOKIE["query"],$_COOKIE["sequence"], $start_time, $end_time, $knowledge, $_POST['feedback'], $_POST['reason'],$_POST['treatment'],$_POST['condition'], $_POST['ad_comment'], $_POST['exp'], $_POST['dec'], $_POST['ad_comments']);
         $insert_basic->execute();
 
 
