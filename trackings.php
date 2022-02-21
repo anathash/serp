@@ -19,8 +19,8 @@ fwrite($myfile, $data);
 $pos = $_GET['pos'];
 $tget = $_GET['t'];
 $dt = new DateTime("@$tget"); // convert UNIX timestamp to PHP DateTime
-$t  = $dt->format('m/d/Y, h:i:s A');
-
+#$t  = $dt->format('m/d/Y, h:i:s A');
+$t  = $dt->format('Y-m-d H:i:s');
 
 #    $t = date("m/d/Y, h:i:s A");
 $action = 'click link';

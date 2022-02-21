@@ -11,9 +11,9 @@ $DATABASE = 'serp';
 $db_connection = new mysqli($SERVER, $USERNAME, $PASSWORD, $DATABASE);
 
 $myfile = fopen("./dumps.txt", "w") or die("Unable to open file!");
-var_dump($GLOBALS);
-$data = ob_get_clean();
-fwrite($myfile, $data);
+#var_dump($GLOBALS);
+#$data = ob_get_clean();
+#fwrite($myfile, $data);
 
 $expire = time() + 60 * 60 * 24 ; //1day
 
@@ -55,16 +55,19 @@ if (!empty($_COOKIE["user"])){
 		#$start_time =  date('m/d/Y, h:i:s A', $basic[3]);
 		#$end_time =   date('m/d/Y, h:i:s A', $basic[4]);
 		$dt = new DateTime("@$basic[3]"); // convert UNIX timestamp to PHP DateTime
-		$start_time  = $dt->format('m/d/Y, h:i:s A');
+		//$start_time  = $dt->format('m/d/Y, h:i:s A');
+		$start_time  = $dt->format('Y-m-d H:i:s');
 		//$dt = new DateTime("@$basic[4]"); // convert UNIX timestamp to PHP DateTime
 		$etc = json_decode($_COOKIE['end_time']);
 		$dt = new DateTime("@$etc"); // convert UNIX timestamp to PHP DateTime
-		$end_time  = $dt->format('m/d/Y, h:i:s A');
+		$end_time  = $dt->format('Y-m-d H:i:s');
+		//$end_time  = $dt->format('m/d/Y, h:i:s A');
 
 		$knowledge='';
 		if (isset($_COOKIE['knowledge'])){
 			$knowledge=$_COOKIE['knowledge'];
 		}
+
 
         $insert_basic = $db_connection->prepare("INSERT INTO serp.exp_data (exp_id, user_id, test_url, window_width, window_height, query, sequence, start, end, knowledge, feedback, reason, treatment, problem, comments, ad_exp_effect, ad_dec_effect, ad_comments )VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
         $insert_basic->bind_param("ssssssssssssssssss", $basic[0], $_COOKIE["user"], $_COOKIE["url"], $basic[1], $basic[2],$_COOKIE["query"],$_COOKIE["sequence"], $start_time, $end_time, $knowledge, $_POST['feedback'], $_POST['reason'],$_POST['treatment'],$_POST['condition'], $_POST['ad_comment'], $_POST['exp'], $_POST['dec'], $_POST['ad_comments']);
@@ -80,7 +83,8 @@ if (!empty($_COOKIE["user"])){
         $str1 = "close page";
 		$cpt = json_decode($_COOKIE['close_page']);
 		$dt = new DateTime("@$cpt"); // convert UNIX timestamp to PHP DateTime
-		$close_page = $dt->format('m/d/Y, h:i:s A');
+		#$close_page = $dt->format('m/d/Y, h:i:s A');
+		$close_page  = $dt->format('Y-m-d H:i:s');
 
         $insert_action = $db_connection->prepare("INSERT INTO serp.user_action(exp_id, user_id, action, link_id, date)VALUES(?,?,?,?,?)");
         $insert_action->bind_param("sssss", $basic[0], $_COOKIE["user"], $str1, $i1,  $close_page);
@@ -150,7 +154,7 @@ if (!empty($_COOKIE["user"])){
     setcookie("sequence", '');
     setcookie("topic0", "");
     setcookie("topic1", "");
-
+/*
 
     $s ="SELECT * FROM serp.round_robin WHERE amazon_id = \"". $_COOKIE['user']."\"";
     $html_list = mysqli_query($db_connection,$s);
@@ -177,8 +181,8 @@ if (!empty($_COOKIE["user"])){
             break;
         }
     }
-
-    if(!mysqli_fetch_array($html_list)){
+*/
+   // if(!mysqli_fetch_array($html_list)){
         $str = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         $len = strlen($str)-1;
         $random_str = '';
@@ -186,11 +190,15 @@ if (!empty($_COOKIE["user"])){
             $num=mt_rand(0,$len);
             $random_str .= $str[$num];
         }
-        $update_finished = $db_connection->prepare("UPDATE serp.user_config SET finished = ? WHERE amazon_id = ?;");
-        $update_finished ->bind_param("ss",$random_str, $_COOKIE['user']);
-        $update_finished ->execute();
-
+		#$update_finished = $db_connection->prepare("UPDATE serp.exp_verification_codes SET verification_code = ? WHERE amazon_id = ?;");
+        #$update_finished ->bind_param("ss",$random_str, $_COOKIE['user']);
+        #$update_finished ->execute();
+		$insertq = $db_connection->prepare("INSERT INTO serp.exp_verification_codes (exp_id, amazon_id, verification_code)VALUES(?,?,?);");
+		$insertq->bind_param("sss", $basic[0], $_COOKIE['user'],$basic[0]);
+		$insertq->execute();
         //setcookie("user", "");
+
+
         setcookie("knowledge", "");
         setcookie("url", '');
         setcookie("query", '');
@@ -203,7 +211,7 @@ if (!empty($_COOKIE["user"])){
                 <script>
                     window.location.href='end.php?code=$random_str';
                 </script>";
-    }
+   // }
 
 
 } else {
@@ -214,5 +222,5 @@ if (!empty($_COOKIE["user"])){
         </script>";
 }
 mysqli_close($db_connection);
-
+?>
 

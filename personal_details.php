@@ -5,7 +5,9 @@ ini_set("display_errors", "stderr");
 error_reporting(E_ALL);
 $expire = time() + 60 * 60 * 24 ; //1day
 
-$db_connection = new mysqli($SERVER, $USERNAME, $PASSWORD, $DATABASE);
+$shared_db_connection = new mysqli($USER_DATA_SERVER, $USER_DATA_USERNAME, $USER_DATA_PASSWORD, $USER_DATA_DB, $USER_DATA_PORT);
+$myfile = fopen("./dumps.txt", "w") or die("Unable to open file!");
+#fwrite($myfile, $data);
 
 setcookie("user", '');
 if (mysqli_connect_errno()) {
@@ -18,22 +20,29 @@ if (mysqli_connect_errno()) {
 if (isset($_POST['ID'])) {
     $amazon_id = $_POST["ID"];
     setcookie("user", $amazon_id, $expire);		
-    $find_user ="SELECT * FROM serp.user_config WHERE amazon_id = ?";
-    $stmt = $db_connection->prepare($find_user);
-    $stmt->bind_param("s", $_POST['ID']);
-    $stmt->execute();
-    $stmt->bind_result($id, $amazon,$finished);
-    $result = $stmt->fetch();
 
-    if($finished !=""){
-        echo "
-                <script>
-                    alert('You have already completed this survey in the past.');
-                    window.location.href='index.html';
-                </script>";
-    }
+	 $user_details ="SELECT user_id, queries FROM serp_shared.user_data WHERE user_id =?";
+	 $stmt = $shared_db_connection->prepare($user_details);
+	 $stmt->bind_param("s", $amazon_id);
+	 $stmt->execute();
+	 $stmt->bind_result($id, $user_queries);
+	 $result = $stmt->fetch();
+	 fwrite($myfile, $id);
+    // if($user_queries != null && trim($user_queries) != ''){
+     if($id != null){
+		 if ($user_queries == null){
+			 $user_queries = '()';
+		 }
+		 #$ref = "submit.php?q=\"".$user_queries."\"";
+		 $ref = "\"submit.php?q=".$user_queries."\"";
+		  #fwrite($myfile, $ref);
+			echo "
+				<script>
+				    window.location.href=".$ref."
+				</script>";
+	}
 }
-	
+mysqli_close($shared_db_connection);
 
 ?>
 <html lang="en">

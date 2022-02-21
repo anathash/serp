@@ -1,7 +1,10 @@
 <?php
 //biu server
-// $USERNAME = 'serp_user';
-// $PASSWORD = 'YpkYNyMA4qWtJA';
+$USER_DATA_SERVER = 'experiments2.biu-ai.com';
+$USER_DATA_USERNAME = 'serp_user';
+$USER_DATA_PASSWORD = 'YpkYNyMA4qWtJA';
+$USER_DATA_PORT = 15136;
+$USER_DATA_DB = 'serp_shared';
 
 // virginia server
 #$SERVER = 'hcdm3.cs.virginia.edu';

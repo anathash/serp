@@ -13,14 +13,13 @@ $required_answers_per_query = 1;
 #$PORT = 3306;
 #$PASSWORD = 'Fall2021!!';
 
-//$myfile = fopen("./dumps.txt", "w") or die("Unable to open file!");
-//var_dump($GLOBALS);
-//$data = ob_get_clean();
-//fwrite($myfile, $data);
-
+$myfile = fopen("./dumps.txt", "w") or die("Unable to open file!");
+#var_dump($GLOBALS);
+#$data = ob_get_clean();
+#fwrite($myfile, $data);
 
 $db_connection = new mysqli($SERVER, $USERNAME, $PASSWORD, $DATABASE);
-
+$shared_db_connection = new mysqli($USER_DATA_SERVER, $USER_DATA_USERNAME, $USER_DATA_PASSWORD, $USER_DATA_DB, $USER_DATA_PORT);
 
 setcookie("url", '');
 setcookie("query", '');
@@ -38,37 +37,26 @@ if (mysqli_connect_errno()) {
 
 if (isset($_COOKIE['user'])) {
     $amazon_id = $_COOKIE['user'];
-
-    $find_user ="SELECT * FROM serp.user_config WHERE amazon_id = ?";
-    $stmt = $db_connection->prepare($find_user);
-    $stmt->bind_param("s", $amazon_id);
-    $stmt->execute();
-    $stmt->bind_result($id, $amazon,$finished);
-    $result = $stmt->fetch();
-
-    if($finished !=""){
-        echo "
-                <script>
-                    alert('The test is finished, Thank you for participating. Don\'t forget to fill to enter your compilation verification code: $finished');
-                    window.location.href='index.html';
-                </script>";
-    }
-    else if (empty($result)) {
-		
+	if (isset($_POST['age'])){
 		if (isset($_POST['education_field'])){
 			$ef = $_POST['education_field'];
-		} else{
+		}
+		 else{
 			$ef = "";
 		}
+		$insert_basic = $shared_db_connection->prepare("INSERT INTO serp_shared.user_data (user_id, age, gender, education_level, education_field) VALUES(?,?,?,?,?);");
+		$insert_basic->bind_param("sssss", $_COOKIE["user"], $_POST["age"], $_POST["gender"], $_POST["education_level"],$ef);
+		$insert_basic->execute();
+		$insert_basic->free_result();
+		$user_qs = '';
+		$q = "SELECT URL,query,sequence,topic0, topic1 FROM serp.config_data WHERE sequence LIKE 'S%' and answered < needed_answers ORDER BY used ASC limit 1;";
+	}
+	if (isset($_GET['q'])){
 
-			
-        $insert_basic = $db_connection->prepare("INSERT INTO serp.user_data (user_id, age, gender, education_level, education_field) VALUES(?,?,?,?,?);");
-        $insert_basic->bind_param("sssss", $_COOKIE["user"], $_POST["age"], $_POST["gender"], $_POST["education_level"],$ef);
-        $insert_basic->execute();
+		$user_qs = $_GET['q'];
+		$q = "SELECT URL,query,sequence,topic0, topic1 FROM serp.config_data WHERE sequence LIKE 'S%' and answered < needed_answers and query not in ".$user_qs." ORDER BY used ASC limit 1;";
 
-        $insert = $db_connection->prepare("insert into serp.user_config (amazon_id) values (?);");
-        $insert->bind_param("s", $amazon_id);
-        $insert->execute();
+	}
 
 //        $find_entry = mysqli_query($db_connection,"select entry_file from serp.config_query_data;");
 //
@@ -78,34 +66,74 @@ if (isset($_COOKIE['user'])) {
 //select all:
 //            $q = "SELECT URL,query,sequence,topic0, topic1 FROM serp.config_data WHERE answered < 1 ORDER BY used ASC limit 1;";
 //selected maybe ads:
+	$html_list = mysqli_query($db_connection, $q);
 
-            $q = "SELECT URL,query,sequence,topic0, topic1 FROM serp.config_data WHERE sequence LIKE 'S%' and answered < needed_answers ORDER BY used ASC limit 1;";			
-//            $html_list = mysqli_query($db_connection, $q);
-            $html_list = mysqli_query($db_connection, $q);
-            while($row = mysqli_fetch_row($html_list)){
-                $url = $row[0];
-                $query = $row[1];
-                $sequence = $row[2];
-                $topic0 = $row[3];
-                $topic1 = $row[4];
+#		while($row = mysqli_fetch_row($html_list)){
+	$row = mysqli_fetch_row($html_list);
+	var_dump($GLOBALS);
+	$data = ob_get_clean();
+	fwrite($myfile, $data);
 
-                $update_used = $db_connection->prepare("UPDATE serp.config_data SET used = used + 1 WHERE URL = ?");
-                $update_used->bind_param("s", $url);
-                $update_used->execute();
+	if (!isset($row)){
+		    echo "
+        <script>
+            alert('An internal error has occured. We applogize for the inconvenience.');
+            window.location.href='index.html';
+        </script>";
+	}
+	else{
+	$url = $row[0];
+	$query = $row[1];
+	$sequence = $row[2];
+	$topic0 = $row[3];
+	$topic1 = $row[4];
 
-                $insert = $db_connection->prepare("insert into serp.round_robin (amazon_id, URL, query ,sequence, topic0, topic1) values (?, ?, ?, ?, ?, ?);");
-                $insert->bind_param("ssssss", $amazon_id,$url, $query, $sequence, $topic0, $topic1);
-                $insert->execute();
-            }
+	$update_used = $db_connection->prepare("UPDATE serp.config_data SET used = used + 1 WHERE URL = ?");
+	$update_used->bind_param("s", $url);
+	$update_used->execute();
+
+	$insert = $db_connection->prepare("insert into serp.round_robin (amazon_id, URL, query ,sequence, topic0, topic1) values (?, ?, ?, ?, ?, ?);");
+	$insert->bind_param("ssssss", $amazon_id,$url, $query, $sequence, $topic0, $topic1);
+	$insert->execute();
+#		}
+
+	if (empty($user_qs)){
+		$user_qs =  "('".$query."')";
+	}
+		else{
+			$user_qs =  substr($user_qs,0, -1);
+			$user_qs = $user_qs.",'".$query."')";
+		}
+
+
+
+	$update_queries = $shared_db_connection->prepare("UPDATE serp_shared.user_data SET queries = ?  WHERE user_id = ?");
+	$update_queries->bind_param("ss", $user_qs, $amazon_id);
+	$update_queries->execute();
+
+	$u_history =  $db_connection->prepare("SELECT count(*) FROM serp.exp_data where user_id=?");
+	$u_history->bind_param(s,$amazon_id);
+	$u_history->execute();
+	$u_history->bind_result($num_exps);
+	$result = $u_history->fetch();
+	$u_history->free_result();
+	$exp_id = $amazon_id.($num_exps+1);
+	setcookie("exp_id", $exp_id, $expire);
+
 //        }
 
-        //setcookie("user", $amazon_id, $expire);
-        header("Location: start.php");
-    }else{
-        //setcookie("user", $amazon_id, $expire);
-        setcookie("continue", "ture", $expire);
-        header("Location: start.php");
-    }
+	//setcookie("user", $amazon_id, $expire);
+	#header("Location: start.php");
+	header("Location: knowledge.php");
+	/* echo "
+			<script>
+				alert('Thank you for participating, you test will start now! ');
+				window.location.href='knowledge.php';
+			</script>";*/
+	#header("Location: index.html");
+
+}
+
 
 }else{
     echo "
@@ -115,4 +143,5 @@ if (isset($_COOKIE['user'])) {
         </script>";
 }
 mysqli_close($db_connection);
+mysqli_close($shared_db_connection);
 ?>
