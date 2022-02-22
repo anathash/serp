@@ -194,7 +194,7 @@ if (!empty($_COOKIE["user"])){
         #$update_finished ->bind_param("ss",$random_str, $_COOKIE['user']);
         #$update_finished ->execute();
 		$insertq = $db_connection->prepare("INSERT INTO serp.exp_verification_codes (exp_id, amazon_id, verification_code)VALUES(?,?,?);");
-		$insertq->bind_param("sss", $basic[0], $_COOKIE['user'],$basic[0]);
+		$insertq->bind_param("sss", $basic[0], $_COOKIE['user'],$random_str);
 		$insertq->execute();
         //setcookie("user", "");
 
